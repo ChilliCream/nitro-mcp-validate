@@ -1,6 +1,9 @@
 import * as core from "@actions/core";
 import * as exec from "@actions/exec";
-import { installNitro } from "@chillicream/nitro-github-actions";
+import {
+  installNitro,
+  getCommentMode,
+} from "@chillicream/nitro-github-actions";
 import pkg from "../package.json" with { type: "json" };
 
 const nitroVersion: string = pkg.version;
@@ -14,12 +17,15 @@ async function executeCommand(): Promise<void> {
     const apiKey = core.getInput("api-key", { required: true });
     const sourceMetadata = core.getInput("source-metadata") || null;
     const cloudUrl = core.getInput("cloud-url") || null;
+    getCommentMode();
 
     const promptPatterns = core.getMultilineInput("prompt-patterns");
     const toolPatterns = core.getMultilineInput("tool-patterns");
 
     if (promptPatterns.length === 0 && toolPatterns.length === 0) {
-      core.setFailed("At least one of prompt-patterns or tool-patterns must be provided.");
+      core.setFailed(
+        "At least one of prompt-patterns or tool-patterns must be provided.",
+      );
       return;
     }
 
