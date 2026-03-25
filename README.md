@@ -1,0 +1,34 @@
+# Nitro MCP Validate
+
+A GitHub Action that validates MCP feature collections against the Nitro registry.
+
+## Usage
+
+```yaml
+- uses: ChilliCream/nitro-mcp-validate@v16
+  with:
+    stage: <stage>
+    mcp-feature-collection-id: <mcp-feature-collection-id>
+    api-key: <api-key>
+    # Optional
+    tool-pattern:
+      - ./mcp/tools/**/*.graphql
+    prompt-pattern:
+      - ./mcp/prompts/**/*.json
+    cloud-url: <cloud-url>
+```
+
+## Inputs
+
+| Name                        | Required | Description                                                     |
+| --------------------------- | -------- | --------------------------------------------------------------- |
+| `stage`                     | Yes      | The name of the stage                                           |
+| `mcp-feature-collection-id` | Yes      | The ID of the MCP Feature Collection                            |
+| `api-key`                   | Yes      | API key for authentication                                      |
+| `tool-pattern`              | No       | One or more file patterns to locate MCP tool definition files   |
+| `prompt-pattern`            | No       | One or more file patterns to locate MCP prompt definition files |
+| `cloud-url`                 | No       | The URL of the Nitro registry                                   |
+
+At least one of `prompt-pattern` or `tool-pattern` should be provided.
+
+If you self-host Nitro or use a dedicated hosted instance, you can specify the `cloud-url` input to point to your instance.

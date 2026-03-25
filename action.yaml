@@ -1,0 +1,31 @@
+name: "Nitro MCP Validate"
+description: "Validates MCP feature collections against the Nitro registry"
+author: "ChilliCream"
+branding:
+  icon: "check-circle"
+  color: "purple"
+
+inputs:
+  stage:
+    description: "The name of the stage"
+    required: true
+  mcp-feature-collection-id:
+    description: "The ID of the MCP Feature Collection"
+    required: true
+  api-key:
+    description: "API key for authentication"
+    required: true
+    secret: true
+  prompt-pattern:
+    description: "One or more file patterns to locate MCP prompt definition files (*.json)"
+    required: false
+  tool-pattern:
+    description: "One or more file patterns to locate MCP tool definition files (*.graphql)"
+    required: false
+  cloud-url:
+    description: "The URL of the Nitro registry"
+    required: false
+
+runs:
+  using: "node20"
+  main: "dist/index.js"
