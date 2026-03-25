@@ -15,7 +15,7 @@ A GitHub Action that validates MCP feature collections against the Nitro registr
       - ./mcp/tools/**/*.graphql
     prompt-patterns:
       - ./mcp/prompts/**/*.json
-    commentMode: none
+    comment-mode: none
     cloud-url: <cloud-url>
 ```
 
@@ -28,7 +28,7 @@ A GitHub Action that validates MCP feature collections against the Nitro registr
 | `api-key`                   | Yes      | API key for authentication                                                      |
 | `tool-patterns`             | No       | One or more file patterns to locate MCP tool definition files                   |
 | `prompt-patterns`           | No       | One or more file patterns to locate MCP prompt definition files                 |
-| `commentMode`               | No       | Pull request feedback mode on failure: `comment`, `review`, or `none` (default) |
+| `comment-mode`               | No       | Pull request feedback mode on failure: `comment`, `review`, or `none` (default) |
 | `cloud-url`                 | No       | The URL of the Nitro registry                                                   |
 
 At least one of `prompt-patterns` or `tool-patterns` should be provided.
@@ -37,13 +37,13 @@ If you self-host Nitro or use a dedicated hosted instance, you can specify the `
 
 ## Pull Request comments
 
-Use `commentMode` to control pull request feedback behavior.
+Use `comment-mode` to control pull request feedback behavior.
 
-`commentMode: comment` comments on the pull request - requires `issues: write` permissions
+`comment-mode: comment` comments on the pull request - requires `issues: write` permissions
 
-`commentMode: review` creates a pull request review with a comment - requires `pull-requests: write` permissions
+`comment-mode: review` creates a pull request review with a comment - requires `pull-requests: write` permissions
 
-Example for `commentMode: comment`:
+Example for `comment-mode: comment`:
 
 ```yaml
 jobs:
@@ -53,7 +53,7 @@ jobs:
       issues: write
 ```
 
-Example for `commentMode: review`:
+Example for `comment-mode: review`:
 
 ```yaml
 jobs:
