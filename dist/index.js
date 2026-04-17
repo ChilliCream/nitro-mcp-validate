@@ -39285,9 +39285,9 @@ function extractTar(file_1, dest_1) {
         // Create dest
         dest = yield _createExtractFolder(dest);
         // Determine whether GNU tar
-        core.debug('Checking tar --version');
+        core_debug('Checking tar --version');
         let versionOutput = '';
-        yield exec('tar --version', [], {
+        yield exec_exec('tar --version', [], {
             ignoreReturnCode: true,
             silent: true,
             listeners: {
@@ -39295,7 +39295,7 @@ function extractTar(file_1, dest_1) {
                 stderr: (data) => (versionOutput += data.toString())
             }
         });
-        core.debug(versionOutput.trim());
+        core_debug(versionOutput.trim());
         const isGnuTar = versionOutput.toUpperCase().includes('GNU TAR');
         // Initialize args
         let args;
@@ -39305,7 +39305,7 @@ function extractTar(file_1, dest_1) {
         else {
             args = [flags];
         }
-        if (core.isDebug() && !flags.includes('v')) {
+        if (isDebug() && !flags.includes('v')) {
             args.push('-v');
         }
         let destArg = dest;
@@ -39323,7 +39323,7 @@ function extractTar(file_1, dest_1) {
             args.push('--overwrite');
         }
         args.push('-C', destArg, '-f', fileArg);
-        yield exec(`tar`, args);
+        yield exec_exec(`tar`, args);
         return dest;
     });
 }
@@ -39761,10 +39761,13 @@ async function installNitro(version) {
     const toolName = "nitro";
     let toolPath = find(toolName, version);
     if (!toolPath) {
-        const downloadUrl = `https://github.com/ChilliCream/graphql-platform/releases/download/${version}/nitro-${osType}-${archType}.zip`;
+        const extension = osType === "win" ? "zip" : "tar.gz";
+        const downloadUrl = `https://github.com/ChilliCream/graphql-platform/releases/download/${version}/nitro-${osType}-${archType}.${extension}`;
         info(`Downloading Nitro CLI from: ${downloadUrl}`);
         const downloadPath = await downloadTool(downloadUrl);
-        const extractPath = await extractZip(downloadPath);
+        const extractPath = osType === "win"
+            ? await extractZip(downloadPath)
+            : await extractTar(downloadPath);
         toolPath = await cacheDir(extractPath, toolName, version);
     }
     addPath(toolPath);
